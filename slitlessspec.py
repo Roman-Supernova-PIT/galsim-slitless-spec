@@ -44,7 +44,9 @@ class SlitlessSpec(PhotonOp):
 		# if local_wcs is None:
 		#     raise TypeError("SlitlessSpec requires a local_wcs to be provided to applyTo")
 	
-		w = photon_array.wavelength
+		w = photon_array.wavelength/1000.
+
+		"""
 		cenx = local_wcs.origin.x
 		ceny = local_wcs.origin.y
 	
@@ -67,6 +69,11 @@ class SlitlessSpec(PhotonOp):
 		dy = local_wcs._y(du, dv)
 		photon_array.x += dx
 		photon_array.y += dy
+  		"""
+
+		dx = (-12.973976 + 213.353667*(w - 1.0) + -20.254574*(w - 1.0)**2)/(1.0 + 1.086448*(w - 1.0) + -0.573796*(w - 1.0)**2)
+		photon_array.x += dx
+	
 		# might need to change dxdz/dydz for the angle of travel through the detector.
 	
 	def __repr__(self):
